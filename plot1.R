@@ -1,9 +1,6 @@
-library(dplyr)
-library(tidyr)
-data <- read.table("household_power_consumption.txt",header = TRUE,sep = ";",na.string = "?")
-data <- tbl_df(data)
-data <- mutate(data,Date = factor(Date,levels = c("1/2/2007","2/2/2007")))
-used <- filter(data,!is.na(Date))
+data <-read.table("household_power_consumption.txt",header = TRUE,sep = ";",na.string = "?")
+good <- !is.na(factor(data$Date,levels = c("1/2/2007","2/2/2007"))) 
+used <- data[good,]
 png("plot1.png")
 hist(used$Global_active_power,
      main = "Global Active Power",
